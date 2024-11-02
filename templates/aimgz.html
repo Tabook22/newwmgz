@@ -121,7 +121,10 @@
             margin: 10px 0;
             line-height: 1.6;
         }
-
+        
+        .news-contents-wrapper{
+            padding:1rem;
+        }
         .second-news .news-item {
             display: flex;
             flex-direction: row;
@@ -131,6 +134,14 @@
 
         .img_frame {
             flex: 0 0 150px;
+            padding:3px;
+            border:1px solid #333;
+            border-radius:10px;
+        }
+        .news-img-frame{
+            padding:3px;
+            border:1px solid #333;
+            border-radius:10px;
         }
 
         .btn-read-more {
@@ -201,6 +212,7 @@
                 border-top: 2px solid #f89d21;
                 border-radius: 0;
                 background-color: #fff8f3;
+                margin:1rem;
             }
 
             .col-md-9 {
@@ -276,11 +288,15 @@
 
             <!-- Main content -->
             <div class="col-md-9">
+                <div class="news-contents-wrapper">
                 <!-- Top News Section -->
+                
                 {% if top_news %}
                 <div class="top-news">
                     <div class="news-item">
+                        <div class="news-img-frame">
                         <img src="{{ top_news.news_image }}" alt="Top News Image" class="news-image">
+                        </div>
                         <div class="news-title">{{ top_news.news_title }}</div>
                         <div class="news-summary">{{ top_news.news_summary }}</div>
                         <a href="{{ top_news.news_url }}" target="_blank" class="btn-read-more">Read More</a>
@@ -302,7 +318,9 @@
                             <a href="{{ news.news_url }}" target="_blank" class="btn-read-more">Read More</a>
                         </div>
                     </div>
+                    <hr>
                     {% endfor %}
+                </div>
                 </div>
             </div>
         </div>

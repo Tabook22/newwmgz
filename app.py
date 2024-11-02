@@ -404,7 +404,7 @@ def create_ai_magazine():
 
     selected_news_ids = request.form.getlist('selectedNews[]')
     news_locations_str = request.form.get('newsLocations')  # Fetch the 'newsLocations' as a string
-    print(f"--------------{news_locations_str}-----")
+
 
     # Parse the 'newsLocations' string to a dictionary
     try:
@@ -414,7 +414,7 @@ def create_ai_magazine():
         return jsonify({"message": "Failed to parse news locations"}), 400
 
     conn = get_db_connection()
-
+    getDate=current_date = datetime.now().date()
     if conn:
         try:
             # Clear the tblmgz table before adding new data
@@ -424,15 +424,13 @@ def create_ai_magazine():
             # Insert selected news into the tblmgz table along with their corresponding locations
             for news_id in selected_news_ids:
                 news = conn.execute("SELECT * FROM tblNews WHERE id = ?", (news_id,)).fetchone()
-                print(f"--------{news}------------------")
                 if news:
                     news_location = news_locations.get(news_id, 'Top News')  # Default to 'Top News'
                     conn.execute("""
                         INSERT INTO tblmgz (add_date, news_title, news_image, news_summary, news_url, news_location)
                         VALUES (?, ?, ?, ?, ?, ?)
-                    """, (news['addDate'], news['news_title'], news['news_image'], news['news_summary'], news['news_url'], news_location))
+                    """, (getDate, news['news_title'], news['news_image'], news['news_summary'], news['news_url'], news_location))
                     conn.commit()
-                    print(f"--------{news['addDate']}------------------")
             message = "AI News Magazine created successfully."
         except sqlite3.Error as e:
             print(f"Error creating AI News Magazine: {e}")
